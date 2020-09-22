@@ -1,0 +1,24 @@
+
+Proc_Exit:
+    GoSub Proc_Cleanup
+    Exit %t
+
+Proc_Cleanup:
+    On Error Resume Next
+    'Place any cleanup of instantiated objects here	
+    %c
+    On Error GoTo 0
+    Return
+
+Proc_Err:
+    Dim lErrNum As String, sErrSource As String, sErrDesc As String
+    lErrNum = VBA.Err.Number
+    sErrSource = VBA.Err.Source & vbcrlf & "%m->"  & csProcName
+    sErrDesc = VBA.Err.Description
+    Resume Proc_Err_Continue
+    
+Proc_Err_Continue:
+    GoSub Proc_Cleanup
+    Err.Raise Number:=lErrNum, Source:=sErrSource, Description:=sErrDesc
+    Exit %t
+ 
