@@ -1,0 +1,25 @@
+
+ErrorHandle_%n:
+    Dim sErrorScope As String
+    Dim sErrorType As String
+    Dim sErrorName As String
+    Dim sErrorReturns As String
+
+    Dim sErrorMsgBox As String
+
+    sErrorScope = "%s"
+    sErrorType = "%t"
+    sErrorName = "%n"
+    sErrorReturns = "%r"
+  
+    Select Case Err.Number
+        Case vbEmpty
+          'Nothing
+        Case Else
+          sErrorMsgBox = "Error " + CStr(Err.Number) + " has 
+occured."
+          sErrorMsgBox = sErrorMsgBox + vbCrLf + Err.Description
+          MsgBox sErrorMsgBox,vbExclamation + vbOKOnly, App.Title
+          Err.Clear
+          Resume Next
+    End Select
